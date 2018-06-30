@@ -14,15 +14,23 @@ int quick_select(int A[], int n, int k){
 
 // 先頭の要素をピボットとする
   pivot = A[0];
-  for(i = j = 1; i < n; i++){
-    if(A[i] <= pivot){
+  
+  for (i = j = n-1;i > 0; i--){
+    if(A[i] > pivot){
+      int x = A[j];
+      A[j] = A[i];
+      A[i] = x;
+      j--;
+    }
+  }
+  for (i = j = 1;i < n; i++){
+    if (A[i] < pivot){
       int z = A[j];
       A[j] = A[i];
       A[i] = z;
       j++;
     }
   }
-
   if(j == k+1) return pivot;
   else if(j < k+1) return quick_select(A+j, n-j, k-j);
   else return quick_select(A+1, j-1, k);
