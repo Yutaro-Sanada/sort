@@ -22,6 +22,7 @@ void quick_sort(int A[], int n){
       }
     }
     for (i = j = 1;i < n; i++){
+      if (A[i] >= pivot)break;
       if (A[i] < pivot){
         int z = A[j];
         A[j] = A[i];
