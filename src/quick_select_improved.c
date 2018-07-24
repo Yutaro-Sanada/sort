@@ -10,7 +10,7 @@ A[0], A[1], ..., A[n-1] の中でk+1番目に小さい値を返す関数
 ただし、Aの中身は書き換えてしまう。
 */
 int quick_select(int A[], int n, int k){
-  int i, j, pivot;
+  int i, j, pivot, l;
 
 // 先頭の要素をピボットとする
   pivot = A[0];
@@ -23,17 +23,18 @@ int quick_select(int A[], int n, int k){
       j--;
     }
   }
-  for (i = j = 1;i < n; i++){
+  
+  for (i = l = 1;i < n; i++){
     if (A[i] < pivot){
-      int z = A[j];
-      A[j] = A[i];
+      int z = A[l];
+      A[l] = A[i];
       A[i] = z;
-      j++;
+      l++;
     }
   }
-  if(j == k+1) return pivot;
-  else if(j < k+1) return quick_select(A+j, n-j, k-j);
-  else return quick_select(A+1, j-1, k);
+  if(l-1 <= k && k<= j) return pivot;
+  else if(j<k) return quick_select(A+j+1, n-j-1, k-j-1);
+  else return quick_select(A+1, l-1, k);
 }
 
 int main(){
@@ -48,6 +49,6 @@ int main(){
 
   for(i=0;i<N;i++){
     if(quick_select(A, N, i) != i) printf("ERROR %d %d\n", i, quick_select(A, N, i));
-//    printf("%d th element is %d\n", i, quick_select(A, N, i));
+    printf("%d th element is %d\n", i, quick_select(A, N, i));
   }
 }
